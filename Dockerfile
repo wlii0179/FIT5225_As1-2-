@@ -18,7 +18,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY pose_api.py .
-COPY model1-yolox/yolo11x-pose.pt ./model1-yolox/
+COPY model3-yolol/yolo11l-pose.pt ./model3-yolol/
 
 RUN mkdir -p /app/images
 
