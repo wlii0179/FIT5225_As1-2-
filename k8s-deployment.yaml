@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pose-estimation-api
+  labels:
+    app: pose-estimation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pose-estimation-api
+  template:
+    metadata:
+      labels:
+        app: pose-estimation-api
+    spec:
+      volumes:
+      - name: model-volume
+        hostPath:
+          path: /path/to/your/model3-yolol
+          type: Directory
+      containers:
+      - name: pose-estimation-api
+        image: pose-estimation:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 60001
+        volumeMounts:
+        - name: model-volume
+          mountPath: /app/model3-yolol
+        resources:
+          requests:
+            memory: "512MiB"
+            cpu: "0.5"
+          limits:
+            memory: "512MiB"
+            cpu: "0.5"
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: OMP_NUM_THREADS
+          value: "2"
+        - name: MKL_NUM_THREADS
+          value: "2"
+        - name: TORCH_NUM_THREADS
+          value: "2"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 60001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 60001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pose-estimation-service
+  labels:
+    app: pose-estimation-api
+spec:
+  type: NodePort
+  ports:
+  - port: 60001
+    targetPort: 60001
+    nodePort: 30001
+    protocol: TCP
+  selector:
+    app: pose-estimation-api
