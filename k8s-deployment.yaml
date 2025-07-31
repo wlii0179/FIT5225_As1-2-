@@ -17,7 +17,7 @@ spec:
       volumes:
       - name: model-volume
         hostPath:
-          path: /path/to/your/model3-yolol
+          path: /root/FIT5225_As1-2-/model3-yolol
           type: Directory
       containers:
       - name: pose-estimation-api
