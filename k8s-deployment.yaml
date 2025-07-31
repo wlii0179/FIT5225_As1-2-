@@ -30,11 +30,11 @@ spec:
           mountPath: /app/model3-yolol
         resources:
           requests:
-            memory: "4Gi"
-            cpu: "2000m"
+            memory: "1Gi"
+            cpu: "500m"
           limits:
-            memory: "4Gi"
-            cpu: "2000m"
+            memory: "2Gi"
+            cpu: "1000m"
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
@@ -56,8 +56,7 @@ spec:
             port: 60001
           initialDelaySeconds: 10
           periodSeconds: 5
-      nodeSelector:
-        kubernetes.io/hostname: izj6c3uixviuhwjwy9kolrz
+
       tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
