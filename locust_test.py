@@ -123,7 +123,7 @@ class PoseEstimationUser(HttpUser):
         except Exception:
             return "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
     
-    @task(5)
+    @task(3)
     def pose_estimation(self):
         test_image = random.choice(self.test_images)
         
@@ -174,7 +174,7 @@ class PoseEstimationUser(HttpUser):
                 response.failure(f"HTTP {response.status_code}: {response.text}")
                 metrics.add_error()
     
-    @task(3)
+    @task(2)
     def pose_estimation_annotated(self):
         test_image = random.choice(self.test_images)
         
@@ -222,7 +222,7 @@ class PoseEstimationUser(HttpUser):
                 response.failure(f"HTTP {response.status_code}: {response.text}")
                 metrics.add_error()
 
-    @task(1)
+    @task(2)
     def health_check(self):
         start_time = time.time()
         
