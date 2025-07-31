@@ -30,11 +30,11 @@ spec:
           mountPath: /app/model3-yolol
         resources:
           requests:
-            memory: "512MiB"
-            cpu: "0.5"
+            memory: "1Gi"
+            cpu: "1000m"
           limits:
-            memory: "512MiB"
-            cpu: "0.5"
+            memory: "1Gi"
+            cpu: "1000m"
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
