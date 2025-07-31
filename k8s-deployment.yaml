@@ -56,6 +56,8 @@ spec:
             port: 60001
           initialDelaySeconds: 10
           periodSeconds: 5
+      nodeSelector:
+        kubernetes.io/hostname: izj6c3uixviuhwjwy9kolrz
       tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
